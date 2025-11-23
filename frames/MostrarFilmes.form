@@ -45,21 +45,21 @@
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="caixaPesquisar" min="-2" pref="473" max="-2" attributes="0"/>
-                      <EmptySpace pref="76" max="32767" attributes="0"/>
+                      <EmptySpace pref="143" max="32767" attributes="0"/>
                   </Group>
               </Group>
           </Group>
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace min="-2" pref="76" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                  <Group type="102" attributes="0">
+                  <Group type="102" alignment="0" attributes="0">
                       <Component id="botaoAlugar" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="34" max="-2" attributes="0"/>
                       <Component id="botaoDevolver" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="32767" attributes="0"/>
-                      <Component id="botaoExcluir1" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="32" max="-2" attributes="0"/>
-                      <Component id="botaoExcluir" min="-2" pref="77" max="-2" attributes="0"/>
+                      <Component id="botaoExcluir" min="-2" pref="139" max="-2" attributes="0"/>
+                      <EmptySpace max="32767" attributes="0"/>
+                      <Component id="botaoInfo" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <Component id="labelCpf" alignment="0" min="-2" pref="114" max="-2" attributes="0"/>
                   <Component id="scrollFilmes" alignment="0" pref="586" max="32767" attributes="0"/>
@@ -97,10 +97,10 @@
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="botaoAlugar" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="botaoDevolver" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="botaoExcluir1" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="botaoExcluir" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="botaoInfo" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace min="-2" pref="23" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="37" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -122,8 +122,11 @@
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="sansserif" size="18" style="0"/>
         </Property>
-        <Property name="text" type="java.lang.String" value="Info"/>
+        <Property name="text" type="java.lang.String" value="Excluir Filme"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="botaoExcluirActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JTextField" name="caixaPesquisar">
       <Events>
@@ -208,13 +211,16 @@
         </Component>
       </SubComponents>
     </Container>
-    <Component class="javax.swing.JButton" name="botaoExcluir1">
+    <Component class="javax.swing.JButton" name="botaoInfo">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="sansserif" size="18" style="0"/>
         </Property>
-        <Property name="text" type="java.lang.String" value="Excluir Filme"/>
+        <Property name="text" type="java.lang.String" value="Info"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="botaoInfoActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>

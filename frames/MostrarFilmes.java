@@ -60,7 +60,7 @@ public class MostrarFilmes extends javax.swing.JFrame {
         jFormattedTextField1 = new javax.swing.JFormattedTextField();
         scrollFilmes = new javax.swing.JScrollPane();
         tabelaFilmes = new javax.swing.JTable();
-        botaoExcluir1 = new javax.swing.JButton();
+        botaoInfo = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -73,7 +73,12 @@ public class MostrarFilmes extends javax.swing.JFrame {
         });
 
         botaoExcluir.setFont(new java.awt.Font("sansserif", 0, 18)); // NOI18N
-        botaoExcluir.setText("Info");
+        botaoExcluir.setText("Excluir Filme");
+        botaoExcluir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoExcluirActionPerformed(evt);
+            }
+        });
 
         caixaPesquisar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -125,8 +130,13 @@ public class MostrarFilmes extends javax.swing.JFrame {
         ));
         scrollFilmes.setViewportView(tabelaFilmes);
 
-        botaoExcluir1.setFont(new java.awt.Font("sansserif", 0, 18)); // NOI18N
-        botaoExcluir1.setText("Excluir Filme");
+        botaoInfo.setFont(new java.awt.Font("sansserif", 0, 18)); // NOI18N
+        botaoInfo.setText("Info");
+        botaoInfo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoInfoActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -150,18 +160,18 @@ public class MostrarFilmes extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(18, 18, 18)
                         .addComponent(caixaPesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, 473, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(76, Short.MAX_VALUE))))
+                        .addContainerGap(143, Short.MAX_VALUE))))
             .addGroup(layout.createSequentialGroup()
                 .addGap(76, 76, 76)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addGroup(layout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                         .addComponent(botaoAlugar)
                         .addGap(34, 34, 34)
                         .addComponent(botaoDevolver)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(botaoExcluir1)
                         .addGap(32, 32, 32)
-                        .addComponent(botaoExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(botaoExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(botaoInfo))
                     .addComponent(labelCpf, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(scrollFilmes, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 586, Short.MAX_VALUE)
                     .addComponent(jFormattedTextField1, javax.swing.GroupLayout.Alignment.LEADING))
@@ -191,9 +201,9 @@ public class MostrarFilmes extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(botaoAlugar)
                     .addComponent(botaoDevolver)
-                    .addComponent(botaoExcluir1)
-                    .addComponent(botaoExcluir))
-                .addGap(23, 23, 23))
+                    .addComponent(botaoExcluir)
+                    .addComponent(botaoInfo))
+                .addGap(37, 37, 37))
         );
 
         pack();
@@ -224,6 +234,14 @@ public class MostrarFilmes extends javax.swing.JFrame {
         // 3. Fecha a tela atual (libera memória)
         this.dispose();
     }//GEN-LAST:event_botaoVoltarActionPerformed
+
+    private void botaoExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoExcluirActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_botaoExcluirActionPerformed
+
+    private void botaoInfoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoInfoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_botaoInfoActionPerformed
 
     private void configurarTabela() {
         modeloTabela = new DefaultTableModel(
@@ -480,7 +498,7 @@ private void carregarFilmesNaTabela(List<Filme> filmes) {
     private javax.swing.JButton botaoCadastrar;
     private javax.swing.JButton botaoDevolver;
     private javax.swing.JButton botaoExcluir;
-    private javax.swing.JButton botaoExcluir1;
+    private javax.swing.JButton botaoInfo;
     private javax.swing.JButton botaoPesquisar;
     private javax.swing.JButton botaoVoltar;
     private javax.swing.JTextField caixaPesquisar;
