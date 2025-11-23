@@ -61,7 +61,7 @@ public class CadastrarUsuario extends javax.swing.JFrame {
         botaoSelFunc.setText("Funcionário");
 
         botaoCancelar.setFont(new java.awt.Font("sansserif", 0, 18)); // NOI18N
-        botaoCancelar.setText("Cancelar");
+        botaoCancelar.setText("Voltar");
         botaoCancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 botaoCancelarActionPerformed(evt);
@@ -77,7 +77,7 @@ public class CadastrarUsuario extends javax.swing.JFrame {
         });
 
         botaoCadastrar.setFont(new java.awt.Font("sansserif", 0, 18)); // NOI18N
-        botaoCadastrar.setText("Cadastrar");
+        botaoCadastrar.setText("Salvar");
         botaoCadastrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 botaoCadastrarActionPerformed(evt);
@@ -91,7 +91,7 @@ public class CadastrarUsuario extends javax.swing.JFrame {
 
         tituloFrame.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         tituloFrame.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        tituloFrame.setText("Cadastrar Usuários");
+        tituloFrame.setText("Cadastro de Usuários");
 
         labelCpf.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         labelCpf.setText("CPF");
@@ -152,7 +152,7 @@ public class CadastrarUsuario extends javax.swing.JFrame {
                         .addComponent(botaoCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(44, 44, 44)
                         .addComponent(botaoCadastrar, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(75, Short.MAX_VALUE))
+                .addContainerGap(65, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

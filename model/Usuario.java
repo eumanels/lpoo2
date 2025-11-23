@@ -1,17 +1,27 @@
 package model;
 
 public abstract class Usuario { // Classe abstrata.
-	private String cpf;
-	private String telefone;
-	private String endereco;
-	private char tipoUsuario;
+	private long id;
+        private String cpf;
+        private String telefone;
+        private String endereco;
+        private char tipoUsuario;
 
-	public Usuario(String cpf, String telefone, String endereco, char tipoUsuario) {
-		this.cpf = cpf;
-		this.telefone = telefone;
-		this.endereco = endereco;
-		this.tipoUsuario = tipoUsuario;
-	}
+	public Usuario(long id, String cpf, String telefone, String endereco, char tipoUsuario) {
+                this.id = id;
+                this.cpf = cpf;
+                this.telefone = telefone;
+                this.endereco = endereco;
+                this.tipoUsuario = tipoUsuario;
+        }
+
+        public long getId() {
+                return id;
+        }
+
+        public void setId(long id) {
+                this.id = id;
+        }
 
 	public String getCpf() {
 		return cpf;

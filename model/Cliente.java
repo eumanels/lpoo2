@@ -3,10 +3,10 @@ package model;
 public class Cliente extends Usuario {  // Herança.
 	private String nome;
 
-	public Cliente(String cpf, String telefone, String endereco, char tipoUsuario, String nome) {
-		super(cpf, telefone, endereco, tipoUsuario);
-		this.nome = nome;
-	}
+	public Cliente(long id, String cpf, String telefone, String endereco, char tipoUsuario, String nome) {
+                super(id, cpf, telefone, endereco, tipoUsuario);
+                this.nome = nome;
+        }
 
 	@Override
 	public String getNome() {

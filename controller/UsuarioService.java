@@ -25,11 +25,13 @@ public class UsuarioService {
     private final List<Usuario> usuarios;
     private final File arquivoUsuarios;
     private final Map<String, String> tipoTextualPorCpf;
-
+    private long proximoId;
+    
     private UsuarioService() {
         this.usuarios = new ArrayList<>();
         this.arquivoUsuarios = new File("usuarios.txt");
         this.tipoTextualPorCpf = new HashMap<>();
+        this.proximoId = 1L;
         carregarUsuarios();
     }
 
@@ -108,7 +110,7 @@ public class UsuarioService {
 
         char tipoChar = tipoNormalizado.isEmpty() ? ' ' : Character.toUpperCase(tipoNormalizado.charAt(0));
 
-        Cliente novo = new Cliente(cpf.trim(), telefone.trim(), endereco.trim(), tipoChar, nome.trim());
+        Cliente novo = new Cliente(gerarProximoId(), cpf.trim(), telefone.trim(), endereco.trim(), tipoChar, nome.trim());
         usuarios.add(novo);
         salvarUsuarios();
     }
@@ -118,7 +120,7 @@ public class UsuarioService {
             for (Usuario u : usuarios) {
                 String tipoTexto = tipoTextualPorCpf.getOrDefault(u.getCpf(), traduzirTipo(String.valueOf(u.getTipoUsuario())));
 
-                arquivo.println(u.getCpf() + ";" + u.getNome() + ";" + u.getTelefone() + ";" + u.getEndereco() + ";"
+                arquivo.println(u.getId() + ";" + u.getCpf() + ";" + u.getNome() + ";" + u.getTelefone() + ";" + u.getEndereco() + ";"
                         + tipoTexto);
             }
         } catch (IOException e) {
@@ -136,13 +138,16 @@ public class UsuarioService {
                 String linha = leitor.nextLine();
                 String[] partes = linha.split(";");
                 if (partes.length >= 5) {
-                    String tipo = traduzirTipo(partes[4]);
-                    tipoTextualPorCpf.put(partes[0], tipo);
+                    UsuarioDados usuarioDados = lerDadosUsuario(partes);
+                    String tipo = usuarioDados.tipoTraduzido();
+
+                    tipoTextualPorCpf.put(usuarioDados.cpf(), tipo);
 
                     char tipoChar = tipo.isEmpty() ? ' ' : Character.toUpperCase(tipo.charAt(0));
 
-                    Cliente c = new Cliente(partes[0], partes[2], partes[3], tipoChar, partes[1]);
+                    Cliente c = new Cliente(usuarioDados.id(), usuarioDados.cpf(), usuarioDados.telefone(), usuarioDados.endereco(), tipoChar, usuarioDados.nome());
                     usuarios.add(c);
+                    atualizarProximoId(usuarioDados.id());
                 }
             }
         } catch (Exception e) {
@@ -169,5 +174,40 @@ public class UsuarioService {
 
     private String normalizarDocumento(String valor) {
         return valor.replaceAll("[^0-9]", "");
+    }
+    
+    private long gerarProximoId() {
+        return proximoId++;
+    }
+
+    private void atualizarProximoId(long idLido) {
+        if (idLido >= proximoId) {
+            proximoId = idLido + 1;
+        }
+    }
+
+    private UsuarioDados lerDadosUsuario(String[] partes) {
+        if (partes.length >= 6) {
+            return lerDadosNovos(partes);
+        }
+
+        return lerDadosAntigos(partes);
+    }
+
+    private UsuarioDados lerDadosNovos(String[] partes) {
+        try {
+            long id = Long.parseLong(partes[0]);
+            return new UsuarioDados(id, partes[1], partes[2], partes[3], partes[4], traduzirTipo(partes[5]));
+        } catch (NumberFormatException e) {
+            return lerDadosAntigos(partes);
+        }
+    }
+
+    private UsuarioDados lerDadosAntigos(String[] partes) {
+        long idGerado = gerarProximoId();
+        return new UsuarioDados(idGerado, partes[0], partes[1], partes[2], partes[3], traduzirTipo(partes[4]));
+    }
+
+    private record UsuarioDados(long id, String cpf, String nome, String telefone, String endereco, String tipoTraduzido) {
     }
 }

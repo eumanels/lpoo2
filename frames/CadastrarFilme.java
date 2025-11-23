@@ -52,7 +52,7 @@ public class CadastrarFilme extends javax.swing.JFrame {
 
         tituloFrame.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         tituloFrame.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        tituloFrame.setText("Cadastrar Filme");
+        tituloFrame.setText("Cadastro de Filme");
 
         caixaCodFilme.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -79,7 +79,7 @@ public class CadastrarFilme extends javax.swing.JFrame {
         botaoSelLivre.setText("Livre");
 
         botaoCancelar.setFont(new java.awt.Font("sansserif", 0, 18)); // NOI18N
-        botaoCancelar.setText("Cancelar");
+        botaoCancelar.setText("Voltar");
         botaoCancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 botaoCancelarActionPerformed(evt);
@@ -95,7 +95,7 @@ public class CadastrarFilme extends javax.swing.JFrame {
         });
 
         botaoCadastrar.setFont(new java.awt.Font("sansserif", 0, 18)); // NOI18N
-        botaoCadastrar.setText("Cadastrar");
+        botaoCadastrar.setText("Salvar");
         botaoCadastrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 botaoCadastrarActionPerformed(evt);
@@ -186,7 +186,7 @@ public class CadastrarFilme extends javax.swing.JFrame {
                                 .addComponent(botaoSel16anos)
                                 .addGap(18, 18, 18)
                                 .addComponent(botaoSel18anos)))))
-                .addContainerGap(60, Short.MAX_VALUE))
+                .addContainerGap(65, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
