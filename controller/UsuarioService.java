@@ -82,17 +82,13 @@ public class UsuarioService {
                 .orElse(null);
     }
     
-    public void excluirUsuario(String cpf) {
+    public Usuario buscarUsuarioPorCpf(String cpf) {
         String cpfNormalizado = normalizarDocumento(cpf);
 
-        Usuario encontrado = usuarios.stream()
+        return usuarios.stream()
                 .filter(usuario -> normalizarDocumento(usuario.getCpf()).equals(cpfNormalizado))
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("Usuário não encontrado."));
-
-        usuarios.remove(encontrado);
-        tipoTextualPorCpf.remove(encontrado.getCpf());
-        salvarUsuarios();
+                .orElse(null);
     }
 
     /**
@@ -121,6 +117,41 @@ public class UsuarioService {
 
         Cliente novo = new Cliente(gerarProximoId(), cpf.trim(), telefone.trim(), endereco.trim(), tipoChar, nome.trim());
         usuarios.add(novo);
+        salvarUsuarios();
+    }
+    
+    public void atualizarUsuario(String cpfOriginal, String nome, String cpf, String telefone, String endereco, String tipo) {
+        String cpfOriginalNormalizado = normalizarDocumento(cpfOriginal);
+
+        Usuario existente = usuarios.stream()
+                .filter(usuario -> normalizarDocumento(usuario.getCpf()).equals(cpfOriginalNormalizado))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("Usuário não encontrado."));
+
+        String cpfNovoNormalizado = normalizarDocumento(cpf);
+        boolean cpfEmUso = usuarios.stream()
+                .filter(usuario -> usuario != existente)
+                .anyMatch(usuario -> normalizarDocumento(usuario.getCpf()).equals(cpfNovoNormalizado));
+
+        if (cpfEmUso) {
+            throw new IllegalArgumentException("Já existe um usuário cadastrado com este CPF.");
+        }
+
+        String tipoNormalizado = traduzirTipo(tipo);
+        char tipoChar = tipoNormalizado.isEmpty() ? ' ' : Character.toUpperCase(tipoNormalizado.charAt(0));
+
+        tipoTextualPorCpf.remove(existente.getCpf());
+
+        existente.setCpf(cpf.trim());
+        existente.setTelefone(telefone.trim());
+        existente.setEndereco(endereco.trim());
+        existente.setTipoUsuario(tipoChar);
+
+        if (existente instanceof Cliente clienteExistente) {
+            clienteExistente.setNome(nome.trim());
+        }
+
+        tipoTextualPorCpf.put(existente.getCpf(), tipoNormalizado);
         salvarUsuarios();
     }
 

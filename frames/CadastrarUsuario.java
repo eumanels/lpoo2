@@ -6,12 +6,15 @@ package frames;
 import javax.swing.JOptionPane;
 
 import controller.UsuarioService;
+import model.Usuario;
 /**
  *
  * @author rjpsilva
  */
 public class CadastrarUsuario extends javax.swing.JFrame {
     private final UsuarioService usuarioService;
+    private boolean emModoEdicao = false;
+    private Usuario usuarioEmEdicao;
     /**
      * Creates new form CadastrarUsuario1
      */
@@ -19,6 +22,15 @@ public class CadastrarUsuario extends javax.swing.JFrame {
         initComponents();
         this.setLocationRelativeTo(null);
         this.usuarioService = UsuarioService.getInstance();
+        configurarModoCadastro();
+    }
+
+    public CadastrarUsuario(Usuario usuarioParaEdicao) {
+        this();
+        this.emModoEdicao = true;
+        this.usuarioEmEdicao = usuarioParaEdicao;
+        preencherCampos(usuarioParaEdicao);
+        configurarModoEdicao();
     }
 
     /**
@@ -138,16 +150,20 @@ public class CadastrarUsuario extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(65, 65, 65)
+                        .addGap(192, 192, 192)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(labelEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 263, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(tituloFrame, javax.swing.GroupLayout.PREFERRED_SIZE, 263, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(65, 65, 65)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(caixaNome, javax.swing.GroupLayout.PREFERRED_SIZE, 514, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(labelNome)
-                            .addComponent(caixaEndereco, javax.swing.GroupLayout.PREFERRED_SIZE, 514, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(labelEndereco)
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(labelCpf)
-                                    .addComponent(caixaCpf, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(caixaCpf, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(labelEndereco))
                                 .addGap(28, 28, 28)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addGroup(layout.createSequentialGroup()
@@ -159,28 +175,23 @@ public class CadastrarUsuario extends javax.swing.JFrame {
                                         .addGap(29, 29, 29)
                                         .addComponent(botaoSelFunc)))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(botaoSelCli))))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(46, 46, 46)
-                        .addComponent(tituloFrame, javax.swing.GroupLayout.PREFERRED_SIZE, 263, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(labelEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 263, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(87, 87, 87)
-                        .addComponent(botaoCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(52, 52, 52)
-                        .addComponent(botaoCadastrar, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(48, 48, 48)
-                        .addComponent(botaoSalvarEdicao, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(botaoSelCli))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(botaoCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(botaoCadastrar, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(botaoSalvarEdicao, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(caixaEndereco, javax.swing.GroupLayout.PREFERRED_SIZE, 514, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(65, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(13, 13, 13)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(tituloFrame, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(labelEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap()
+                .addComponent(tituloFrame, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(labelEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(labelNome)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -197,16 +208,16 @@ public class CadastrarUsuario extends javax.swing.JFrame {
                         .addComponent(botaoSelFunc)
                         .addComponent(botaoSelCli))
                     .addComponent(caixaCpf))
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(labelEndereco)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(caixaEndereco, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(32, 32, 32)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(botaoCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(botaoCadastrar, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(botaoSalvarEdicao, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(59, 59, 59))
+                .addGap(30, 30, 30))
         );
 
         pack();
@@ -227,49 +238,15 @@ public class CadastrarUsuario extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_botaoCancelarActionPerformed
 
-    private void botaoSelCliActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoSelCliActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_botaoSelCliActionPerformed
-
     private void botaoCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoCadastrarActionPerformed
-        // 1. Validação do NOME (Campo de texto normal)
-        if (caixaNome.getText().trim().isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Por favor, informe o Nome.");
-            caixaNome.requestFocus();
+        if (emModoEdicao) {
             return;
         }
 
-        // 2. Validação do CPF (Campo Formatado)
-        // Removemos pontos, traços e espaços para ver se sobrou algum número
-        String cpfSemFormatacao = caixaCpf.getText().replace(".", "").replace("-", "").replace(" ", "");
-        if (cpfSemFormatacao.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Por favor, informe o CPF.");
-            caixaCpf.requestFocus();
+        if (!validarCampos()) {
             return;
         }
 
-        // 3. Validação do TELEFONE (Campo Formatado)
-        // Removemos parênteses, traços e espaços
-        String telSemFormatacao = caixaTel.getText().replace("(", "").replace(")", "").replace("-", "").replace(" ", "");
-        if (telSemFormatacao.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Por favor, informe o Telefone.");
-            caixaTel.requestFocus();
-            return;
-        }
-
-        // 4. Validação dos RADIO BUTTONS (Tipo de Usuário)
-        // Verifica se nem o funcionário nem o cliente estão marcados
-        if (!botaoSelFunc.isSelected() && !botaoSelCli.isSelected()) {
-            JOptionPane.showMessageDialog(this, "Selecione o Tipo de Usuário (Funcionário ou Cliente).");
-            return;
-        }
-
-        // 5. Validação do ENDEREÇO
-        if (caixaEndereco.getText().trim().isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Por favor, informe o Endereço.");
-            caixaEndereco.requestFocus();
-            return;
-        }
         String nome = caixaNome.getText().trim();
         String cpf = caixaCpf.getText().trim();
         String telefone = caixaTel.getText().trim();
@@ -286,6 +263,48 @@ public class CadastrarUsuario extends javax.swing.JFrame {
         } catch (IllegalStateException e) {
             JOptionPane.showMessageDialog(this, "Erro ao salvar usuário: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
         }
+    }//GEN-LAST:event_botaoCadastrarActionPerformed
+
+    private boolean validarCampos() {
+        // 1. Validação do NOME (Campo de texto normal)
+        if (caixaNome.getText().trim().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Por favor, informe o Nome.");
+            caixaNome.requestFocus();
+            return false;
+        }
+
+        // 2. Validação do CPF (Campo Formatado)
+        // Removemos pontos, traços e espaços para ver se sobrou algum número
+        String cpfSemFormatacao = caixaCpf.getText().replace(".", "").replace("-", "").replace(" ", "");
+        if (cpfSemFormatacao.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Por favor, informe o CPF.");
+            caixaCpf.requestFocus();
+            return false;
+        }
+
+        // 3. Validação do TELEFONE (Campo Formatado)
+        // Removemos parênteses, traços e espaços
+        String telSemFormatacao = caixaTel.getText().replace("(", "").replace(")", "").replace("-", "").replace(" ", "");
+        if (telSemFormatacao.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Por favor, informe o Telefone.");
+            caixaTel.requestFocus();
+            return false;
+        }
+
+        // 4. Validação dos RADIO BUTTONS (Tipo de Usuário)
+        // Verifica se nem o funcionário nem o cliente estão marcados
+        if (!botaoSelFunc.isSelected() && !botaoSelCli.isSelected()) {
+            JOptionPane.showMessageDialog(this, "Selecione o Tipo de Usuário (Funcionário ou Cliente).");
+            return false;
+        }
+
+        // 5. Validação do ENDEREÇO
+        if (caixaEndereco.getText().trim().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Por favor, informe o Endereço.");
+            caixaEndereco.requestFocus();
+            return false;
+        }
+        return true;
     }//GEN-LAST:event_botaoCadastrarActionPerformed
 
     // Método auxiliar para limpar a tela após cadastrar
@@ -305,9 +324,70 @@ public class CadastrarUsuario extends javax.swing.JFrame {
     }//GEN-LAST:event_caixaNomeActionPerformed
 
     private void botaoSalvarEdicaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoSalvarEdicaoActionPerformed
-        // TODO add your handling code here:
+        if (!emModoEdicao || usuarioEmEdicao == null) {
+            return;
+        }
+
+        if (!validarCampos()) {
+            return;
+        }
+
+        String nome = caixaNome.getText().trim();
+        String cpf = caixaCpf.getText().trim();
+        String telefone = caixaTel.getText().trim();
+        String endereco = caixaEndereco.getText().trim();
+        String tipo = botaoSelFunc.isSelected() ? "Funcionario" : "Cliente";
+
+        try {
+            usuarioService.atualizarUsuario(usuarioEmEdicao.getCpf(), nome, cpf, telefone, endereco, tipo);
+            JOptionPane.showMessageDialog(this, "Usuário atualizado com sucesso!");
+            abrirListaUsuarios();
+        } catch (IllegalArgumentException e) {
+            JOptionPane.showMessageDialog(this, e.getMessage(), "Erro na atualização", JOptionPane.WARNING_MESSAGE);
+            caixaCpf.requestFocus();
+        } catch (IllegalStateException e) {
+            JOptionPane.showMessageDialog(this, "Erro ao salvar usuário: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_botaoSalvarEdicaoActionPerformed
 
+    private void botaoSelCliActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoSelCliActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_botaoSelCliActionPerformed
+
+    private void preencherCampos(Usuario usuario) {
+        caixaNome.setText(usuario.getNome());
+        caixaCpf.setText(usuario.getCpf());
+        caixaTel.setText(usuario.getTelefone());
+        caixaEndereco.setText(usuario.getEndereco());
+
+        String tipo = usuarioService.obterTipoTextual(usuario);
+        if (tipo.equalsIgnoreCase("Funcionario")) {
+            botaoSelFunc.setSelected(true);
+        } else {
+            botaoSelCli.setSelected(true);
+        }
+    }
+
+    private void configurarModoCadastro() {
+        emModoEdicao = false;
+        tituloFrame.setVisible(true);
+        labelEditar.setVisible(false);
+        botaoCadastrar.setVisible(true);
+        botaoSalvarEdicao.setVisible(false);
+    }
+
+    private void configurarModoEdicao() {
+        tituloFrame.setVisible(false);
+        labelEditar.setVisible(true);
+        botaoCadastrar.setVisible(false);
+        botaoSalvarEdicao.setVisible(true);
+    }
+
+    private void abrirListaUsuarios() {
+        MostrarUsuarios proximaTela = new MostrarUsuarios();
+        proximaTela.setVisible(true);
+        this.dispose();
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botaoCadastrar;

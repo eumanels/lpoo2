@@ -89,6 +89,11 @@ public class MostrarUsuarios extends javax.swing.JFrame {
 
         botaoEditar.setFont(new java.awt.Font("sansserif", 0, 18)); // NOI18N
         botaoEditar.setText("Editar Usuário");
+        botaoEditar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoEditarActionPerformed(evt);
+            }
+        });
 
         scrollUsuarios.setToolTipText("");
         scrollUsuarios.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
@@ -179,6 +184,10 @@ public class MostrarUsuarios extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_botaoCadastrarActionPerformed
 
+    private void botaoEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoEditarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_botaoEditarActionPerformed
+
     private void configurarTabela() {
         modeloTabela = new DefaultTableModel(
                 new Object[]{"CPF", "Nome", "Telefone", "Endereço", "Tipo"}, 0
@@ -214,7 +223,7 @@ public class MostrarUsuarios extends javax.swing.JFrame {
         botaoEditar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                excluirUsuarioSelecionado();
+                editarUsuarioSelecionado();
             }
         });
 
@@ -295,35 +304,26 @@ public class MostrarUsuarios extends javax.swing.JFrame {
         return nomeCorresponde || cpfCorresponde;
     }
 
-    private void excluirUsuarioSelecionado() {
+    private void editarUsuarioSelecionado() {
         int linhaSelecionada = tabelaUsuarios.getSelectedRow();
 
         if (linhaSelecionada < 0) {
-            JOptionPane.showMessageDialog(this, "Selecione um usuário para excluir.", "Aviso", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Selecione um usuário para editar.", "Aviso", JOptionPane.WARNING_MESSAGE);
             return;
         }
 
         String cpf = (String) modeloTabela.getValueAt(linhaSelecionada, 0);
 
-        int confirmacao = JOptionPane.showConfirmDialog(this,
-                "Deseja realmente excluir o usuário selecionado?",
-                "Confirmação",
-                JOptionPane.YES_NO_OPTION);
+        Usuario usuarioSelecionado = usuarioService.buscarUsuarioPorCpf(cpf);
 
-        if (confirmacao != JOptionPane.YES_OPTION) {
+        if (usuarioSelecionado == null) {
+            JOptionPane.showMessageDialog(this, "Usuário não encontrado para edição.", "Erro", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
-        try {
-            usuarioService.excluirUsuario(cpf);
-            JOptionPane.showMessageDialog(this, "Usuário excluído com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
-            limparFiltro();
-            carregarUsuariosNaTabela(usuarioService.getUsuarios());
-        } catch (IllegalArgumentException ex) {
-            JOptionPane.showMessageDialog(this, ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
-        }
-
-        atualizarEstadoAcoes();
+        CadastrarUsuario telaEdicao = new CadastrarUsuario(usuarioSelecionado);
+        telaEdicao.setVisible(true);
+        this.dispose();
     }
 
     private void limparFiltro() {
