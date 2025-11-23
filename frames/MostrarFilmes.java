@@ -231,10 +231,8 @@ public class MostrarFilmes extends javax.swing.JFrame {
         };
         tabelaFilmes.setModel(modeloTabela);
 
-        // Opcional: desativa o auto-resize para respeitar mais os tamanhos
         tabelaFilmes.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
 
-        // Configura larguras das colunas
         var colModel = tabelaFilmes.getColumnModel();
 
         colModel.getColumn(0).setPreferredWidth(50);   // Código
@@ -318,19 +316,24 @@ public class MostrarFilmes extends javax.swing.JFrame {
         });
     }
 
-    private void carregarFilmesNaTabela(List<Filme> filmes) {
-        modeloTabela.setRowCount(0);
+private void carregarFilmesNaTabela(List<Filme> filmes) {
+    modeloTabela.setRowCount(0);
 
-        for (Filme filme : filmes) {
-            modeloTabela.addRow(new Object[]{
-                filme.getCodFilme(),
-                filme.getTitulo(),
-                filme.getGenero(),
-                filme.getClassificacao(),
-                filme.getSituacao()
-            });
-        }
+    for (Filme filme : filmes) {
+        String classificacaoFormatada = (filme.getClassificacao() == 0)
+                ? "Livre"
+                : String.valueOf(filme.getClassificacao());
+
+        modeloTabela.addRow(new Object[]{
+            filme.getCodFilme(),
+            filme.getTitulo(),
+            filme.getGenero(),
+            classificacaoFormatada,
+            filme.getSituacao()
+        });
     }
+}
+
 
     private void pesquisarFilmes() {
         String termo = caixaPesquisar.getText().trim();
@@ -425,6 +428,15 @@ public class MostrarFilmes extends javax.swing.JFrame {
 
         int codigo = (int) modeloTabela.getValueAt(linhaSelecionada, 0);
 
+        int confirmacao = JOptionPane.showConfirmDialog(this,
+                "Deseja realmente excluir o filme selecionado?",
+                "Confirmação",
+                JOptionPane.YES_NO_OPTION);
+
+        if (confirmacao != JOptionPane.YES_OPTION) {
+            return;
+        }
+        
         try {
             filmeService.excluirFilme(codigo);
             JOptionPane.showMessageDialog(this, "Filme excluído com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);

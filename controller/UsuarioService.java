@@ -41,10 +41,36 @@ public class UsuarioService {
         return Collections.unmodifiableList(usuarios);
     }
     
+    public String obterTipoTextual(Usuario usuario) {
+        if (usuario == null) {
+            return "";
+        }
+
+        String tipo = tipoTextualPorCpf.getOrDefault(usuario.getCpf(), traduzirTipo(String.valueOf(usuario.getTipoUsuario())));
+        if (tipo.isEmpty()) {
+            return String.valueOf(usuario.getTipoUsuario());
+        }
+
+        return tipo;
+    }
+    
     public boolean existeUsuarioPorCpf(String cpf) {
         String cpfNormalizado = normalizarDocumento(cpf);
         return usuarios.stream()
                 .anyMatch(usuario -> normalizarDocumento(usuario.getCpf()).equals(cpfNormalizado));
+    }
+    
+    public void excluirUsuario(String cpf) {
+        String cpfNormalizado = normalizarDocumento(cpf);
+
+        Usuario encontrado = usuarios.stream()
+                .filter(usuario -> normalizarDocumento(usuario.getCpf()).equals(cpfNormalizado))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("Usuário não encontrado."));
+
+        usuarios.remove(encontrado);
+        tipoTextualPorCpf.remove(encontrado.getCpf());
+        salvarUsuarios();
     }
 
     /**

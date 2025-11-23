@@ -5,6 +5,15 @@
 package frames;
 
 import controller.UsuarioService;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.List;
+import java.util.stream.Collectors;
+import javax.swing.JOptionPane;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 import model.Usuario;
 
@@ -20,7 +29,14 @@ public class MostrarUsuarios extends javax.swing.JFrame {
     public MostrarUsuarios() {
         initComponents();
         this.setLocationRelativeTo(null);
+        configurarTabela();
+        configurarListeners();
+        carregarUsuariosNaTabela(usuarioService.getUsuarios());
+        atualizarEstadoAcoes();
     }
+    
+    private final UsuarioService usuarioService = UsuarioService.getInstance();
+    private DefaultTableModel modeloTabela;
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -98,24 +114,22 @@ public class MostrarUsuarios extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(22, 22, 22)
                 .addComponent(botaoVoltar)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 198, Short.MAX_VALUE)
                 .addComponent(tituloFrame, javax.swing.GroupLayout.PREFERRED_SIZE, 263, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addGap(111, 111, 111)
                 .addComponent(botaoCadastrar)
                 .addGap(26, 26, 26))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(68, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(scrollUsuarios, javax.swing.GroupLayout.PREFERRED_SIZE, 496, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                            .addComponent(botaoExcluir)
-                            .addGap(242, 242, 242))
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                            .addComponent(botaoPesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(barraPesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, 395, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(76, 76, 76)))))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(349, 349, 349)
+                .addComponent(botaoExcluir))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(46, 46, 46)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(botaoPesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(barraPesquisa))
+                    .addComponent(scrollUsuarios, javax.swing.GroupLayout.PREFERRED_SIZE, 756, javax.swing.GroupLayout.PREFERRED_SIZE)))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -126,14 +140,14 @@ public class MostrarUsuarios extends javax.swing.JFrame {
                     .addComponent(botaoVoltar)
                     .addComponent(botaoCadastrar))
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(barraPesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(botaoPesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(scrollUsuarios, javax.swing.GroupLayout.PREFERRED_SIZE, 305, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(13, 13, 13)
+                .addComponent(scrollUsuarios, javax.swing.GroupLayout.PREFERRED_SIZE, 305, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addComponent(botaoExcluir)
-                .addContainerGap(60, Short.MAX_VALUE))
+                .addContainerGap(25, Short.MAX_VALUE))
         );
 
         pack();
@@ -165,6 +179,178 @@ public class MostrarUsuarios extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_botaoCadastrarActionPerformed
 
+    private void configurarTabela() {
+        modeloTabela = new DefaultTableModel(
+                new Object[]{"CPF", "Nome", "Telefone", "Endereço", "Tipo"}, 0
+        ) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
+
+        tabelaUsuarios.setModel(modeloTabela);
+        tabelaUsuarios.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        
+        tabelaUsuarios.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
+
+        var colModel = tabelaUsuarios.getColumnModel();
+
+        colModel.getColumn(0).setPreferredWidth(100);   // CPF
+        colModel.getColumn(1).setPreferredWidth(230);  // Nome
+        colModel.getColumn(2).setPreferredWidth(100);  // Telefone
+        colModel.getColumn(3).setPreferredWidth(230);  // Endereço
+        colModel.getColumn(4).setPreferredWidth(90);   // Tipo
+    }
+
+    private void configurarListeners() {
+        botaoPesquisar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                pesquisarUsuarios();
+            }
+        });
+
+        botaoExcluir.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                excluirUsuarioSelecionado();
+            }
+        });
+
+        barraPesquisa.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                tratarAlteracaoPesquisa();
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                tratarAlteracaoPesquisa();
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                tratarAlteracaoPesquisa();
+            }
+        });
+
+        tabelaUsuarios.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+            @Override
+            public void valueChanged(ListSelectionEvent e) {
+                if (!e.getValueIsAdjusting()) {
+                    atualizarEstadoAcoes();
+                }
+            }
+        });
+    }
+
+    private void tratarAlteracaoPesquisa() {
+        if (barraPesquisa.getText().trim().isEmpty()) {
+            carregarUsuariosNaTabela(usuarioService.getUsuarios());
+        }
+        atualizarEstadoAcoes();
+    }
+
+    private void carregarUsuariosNaTabela(List<Usuario> usuarios) {
+        modeloTabela.setRowCount(0);
+
+        for (Usuario usuario : usuarios) {
+            modeloTabela.addRow(new Object[]{
+                normalizarCpfParaExibicao(usuario.getCpf()),
+                valorSeguro(usuario.getNome()),
+                valorSeguro(usuario.getTelefone()),
+                valorSeguro(usuario.getEndereco()),
+                valorSeguro(usuarioService.obterTipoTextual(usuario))
+            });
+        }
+    }
+
+    private void pesquisarUsuarios() {
+        String termo = barraPesquisa.getText().trim();
+
+        if (termo.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Informe um CPF ou nome para pesquisar.", "Aviso", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        String termoMinusculo = termo.toLowerCase();
+        String termoCpf = normalizarDocumento(termo);
+
+        List<Usuario> encontrados = usuarioService.getUsuarios().stream()
+                .filter(usuario -> correspondePesquisa(usuario, termoMinusculo, termoCpf))
+                .collect(Collectors.toList());
+
+        if (encontrados.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Nenhum usuário encontrado.", "Pesquisa", JOptionPane.INFORMATION_MESSAGE);
+        }
+
+        carregarUsuariosNaTabela(encontrados);
+    }
+
+    private boolean correspondePesquisa(Usuario usuario, String termoMinusculo, String termoCpf) {
+        boolean nomeCorresponde = usuario.getNome() != null && usuario.getNome().toLowerCase().contains(termoMinusculo);
+        boolean cpfCorresponde = !termoCpf.isEmpty() && normalizarDocumento(usuario.getCpf()).contains(termoCpf);
+
+        return nomeCorresponde || cpfCorresponde;
+    }
+
+    private void excluirUsuarioSelecionado() {
+        int linhaSelecionada = tabelaUsuarios.getSelectedRow();
+
+        if (linhaSelecionada < 0) {
+            JOptionPane.showMessageDialog(this, "Selecione um usuário para excluir.", "Aviso", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        String cpf = (String) modeloTabela.getValueAt(linhaSelecionada, 0);
+
+        int confirmacao = JOptionPane.showConfirmDialog(this,
+                "Deseja realmente excluir o usuário selecionado?",
+                "Confirmação",
+                JOptionPane.YES_NO_OPTION);
+
+        if (confirmacao != JOptionPane.YES_OPTION) {
+            return;
+        }
+
+        try {
+            usuarioService.excluirUsuario(cpf);
+            JOptionPane.showMessageDialog(this, "Usuário excluído com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+            limparFiltro();
+            carregarUsuariosNaTabela(usuarioService.getUsuarios());
+        } catch (IllegalArgumentException ex) {
+            JOptionPane.showMessageDialog(this, ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+        }
+
+        atualizarEstadoAcoes();
+    }
+
+    private void limparFiltro() {
+        barraPesquisa.setText("");
+        tabelaUsuarios.clearSelection();
+    }
+
+    private void atualizarEstadoAcoes() {
+        boolean temSelecao = tabelaUsuarios.getSelectedRow() >= 0;
+        boolean temTextoPesquisa = !barraPesquisa.getText().trim().isEmpty();
+
+        botaoExcluir.setEnabled(temSelecao);
+        botaoPesquisar.setEnabled(temTextoPesquisa);
+    }
+
+    private String valorSeguro(String valor) {
+        return valor == null ? "" : valor.trim();
+    }
+
+    private String normalizarDocumento(String valor) {
+        return valor.replaceAll("[^0-9]", "");
+    }
+
+    private String normalizarCpfParaExibicao(String cpf) {
+        return valorSeguro(cpf);
+    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField barraPesquisa;
     private javax.swing.JButton botaoCadastrar;
