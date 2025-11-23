@@ -101,6 +101,11 @@ public class MostrarFilmes extends javax.swing.JFrame {
 
         botaoDevolver.setFont(new java.awt.Font("sansserif", 0, 18)); // NOI18N
         botaoDevolver.setText("Devolver Filme");
+        botaoDevolver.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoDevolverActionPerformed(evt);
+            }
+        });
 
         tituloFrame.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         tituloFrame.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -245,6 +250,10 @@ public class MostrarFilmes extends javax.swing.JFrame {
     private void botaoInfoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoInfoActionPerformed
         mostrarInformacoesAlugueis();
     }//GEN-LAST:event_botaoInfoActionPerformed
+
+    private void botaoDevolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoDevolverActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_botaoDevolverActionPerformed
 
     private void configurarTabela() {
         modeloTabela = new DefaultTableModel(
@@ -411,6 +420,15 @@ private void carregarFilmesNaTabela(List<Filme> filmes) {
 
         Cliente cliente = usuarioService.buscarClientePorCpf(cpf);
 
+        int confirmacao = JOptionPane.showConfirmDialog(this,
+                "Deseja alugar o filme selecionado?",
+                "Confirmação",
+                JOptionPane.YES_NO_OPTION);
+
+        if (confirmacao != JOptionPane.YES_OPTION) {
+            return;
+        }
+        
         if (cliente == null) {
             JOptionPane.showMessageDialog(this, "Cliente não encontrado. Cadastre o usuário antes de alugar.", "Erro", JOptionPane.ERROR_MESSAGE);
             return;
@@ -437,6 +455,15 @@ private void carregarFilmesNaTabela(List<Filme> filmes) {
 
         int codigo = (int) modeloTabela.getValueAt(linhaSelecionada, 0);
 
+        int confirmacao = JOptionPane.showConfirmDialog(this,
+                "Deseja devolver o filme selecionado?",
+                "Confirmação",
+                JOptionPane.YES_NO_OPTION);
+
+        if (confirmacao != JOptionPane.YES_OPTION) {
+            return;
+        }
+        
         try {
             filmeService.devolverFilme(codigo);
             JOptionPane.showMessageDialog(this, "Filme devolvido com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
