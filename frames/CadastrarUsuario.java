@@ -45,7 +45,7 @@ public class CadastrarUsuario extends javax.swing.JFrame {
         labelNome = new javax.swing.JLabel();
         caixaCpf = new javax.swing.JFormattedTextField();
         caixaTel = new javax.swing.JFormattedTextField();
-        tituloFrame1 = new javax.swing.JLabel();
+        labelEditar = new javax.swing.JLabel();
         botaoSalvarEdicao = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -119,9 +119,9 @@ public class CadastrarUsuario extends javax.swing.JFrame {
             ex.printStackTrace();
         }
 
-        tituloFrame1.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
-        tituloFrame1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        tituloFrame1.setText("Editar Usuário");
+        labelEditar.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        labelEditar.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        labelEditar.setText("Editar Usuário");
 
         botaoSalvarEdicao.setFont(new java.awt.Font("sansserif", 0, 18)); // NOI18N
         botaoSalvarEdicao.setText("Salvar");
@@ -164,7 +164,7 @@ public class CadastrarUsuario extends javax.swing.JFrame {
                         .addGap(46, 46, 46)
                         .addComponent(tituloFrame, javax.swing.GroupLayout.PREFERRED_SIZE, 263, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(tituloFrame1, javax.swing.GroupLayout.PREFERRED_SIZE, 263, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(labelEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 263, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(87, 87, 87)
                         .addComponent(botaoCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -180,7 +180,7 @@ public class CadastrarUsuario extends javax.swing.JFrame {
                 .addGap(13, 13, 13)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(tituloFrame, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(tituloFrame1, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(labelEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(labelNome)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -320,12 +320,12 @@ public class CadastrarUsuario extends javax.swing.JFrame {
     private javax.swing.JTextField caixaNome;
     private javax.swing.JFormattedTextField caixaTel;
     private javax.swing.JLabel labelCpf;
+    private javax.swing.JLabel labelEditar;
     private javax.swing.JLabel labelEndereco;
     private javax.swing.JLabel labelNome;
     private javax.swing.JLabel labelTelefone;
     private javax.swing.JLabel labelTipoUsu;
     private javax.swing.ButtonGroup tipoUsuario;
     private javax.swing.JLabel tituloFrame;
-    private javax.swing.JLabel tituloFrame1;
     // End of variables declaration//GEN-END:variables
 }
