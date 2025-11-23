@@ -15,6 +15,7 @@ import javax.swing.event.DocumentListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
+import model.Cliente;
 import model.Filme;
 /**
  *
@@ -383,7 +384,9 @@ private void carregarFilmesNaTabela(List<Filme> filmes) {
             return;
         }
 
-        if (!usuarioService.existeUsuarioPorCpf(cpf)) {
+        Cliente cliente = usuarioService.buscarClientePorCpf(cpf);
+
+        if (cliente == null) {
             JOptionPane.showMessageDialog(this, "Cliente não encontrado. Cadastre o usuário antes de alugar.", "Erro", JOptionPane.ERROR_MESSAGE);
             return;
         }
@@ -391,11 +394,11 @@ private void carregarFilmesNaTabela(List<Filme> filmes) {
         int codigo = (int) modeloTabela.getValueAt(linhaSelecionada, 0);
 
         try {
-            filmeService.alugarFilme(codigo, cpf);
+            filmeService.alugarFilme(codigo, cliente);
             JOptionPane.showMessageDialog(this, "Filme alugado com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
             limparFiltro();
             carregarFilmesNaTabela(filmeService.getFilmes());
-        } catch (IllegalArgumentException ex) {
+        } catch (IllegalArgumentException | IllegalStateException ex) {
             JOptionPane.showMessageDialog(this, ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
         }
     }

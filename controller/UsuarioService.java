@@ -60,6 +60,17 @@ public class UsuarioService {
                 .anyMatch(usuario -> normalizarDocumento(usuario.getCpf()).equals(cpfNormalizado));
     }
     
+    public Cliente buscarClientePorCpf(String cpf) {
+        String cpfNormalizado = normalizarDocumento(cpf);
+
+        return usuarios.stream()
+                .filter(usuario -> normalizarDocumento(usuario.getCpf()).equals(cpfNormalizado))
+                .filter(Cliente.class::isInstance)
+                .map(Cliente.class::cast)
+                .findFirst()
+                .orElse(null);
+    }
+    
     public void excluirUsuario(String cpf) {
         String cpfNormalizado = normalizarDocumento(cpf);
 

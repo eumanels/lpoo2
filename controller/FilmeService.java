@@ -6,10 +6,10 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Scanner;
+import model.Aluguel;
+import model.Cliente;
 
 import model.Filme;
 
@@ -23,10 +23,12 @@ public class FilmeService {
 
     private final List<Filme> filmes;
     private final File arquivoFilmes;
+    private final File arquivoAlugueis;
 
     private FilmeService() {
         this.filmes = new ArrayList<>();
         this.arquivoFilmes = new File("filmes.txt");
+        this.arquivoAlugueis = new File("alugueis.txt");
         carregarFilmes();
     }
 
@@ -45,7 +47,7 @@ public class FilmeService {
                 .orElse(null);
     }
 
-    public void alugarFilme(int codigo, String cpfCliente) {
+    public Filme alugarFilme(int codigo, Cliente cliente) {
         Filme filme = buscarFilmePorCodigo(codigo);
 
         if (filme == null) {
@@ -57,8 +59,11 @@ public class FilmeService {
         }
 
         filme.setSituacao("indisponível");
-        filme.setCpfClienteAlugou(cpfCliente);
+        filme.setCpfClienteAlugou(cliente.getCpf());
         salvarFilmes();
+        registrarAluguel(cliente, filme);
+
+        return filme;
     }
 
     public void devolverFilme(int codigo) {
@@ -125,6 +130,17 @@ public class FilmeService {
             throw new IllegalStateException("Erro ao salvar filmes: " + e.getMessage(), e);
         }
     }
+    
+    private void registrarAluguel(Cliente cliente, Filme filme) {
+        Aluguel aluguel = new Aluguel(cliente, filme);
+
+        try (PrintWriter arquivo = new PrintWriter(new FileWriter(arquivoAlugueis, true))) {
+            arquivo.println(aluguel.toArquivo());
+        } catch (IOException e) {
+            throw new IllegalStateException("Erro ao registrar aluguel: " + e.getMessage(), e);
+        }
+    }
+
 
     private void carregarFilmes() {
         if (!arquivoFilmes.exists()) {
