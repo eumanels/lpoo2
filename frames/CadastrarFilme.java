@@ -3,7 +3,8 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package frames;
-
+import javax.swing.JOptionPane;
+import controller.FilmeService;
 /**
  *
  * @author rjpsilva
@@ -17,6 +18,8 @@ public class CadastrarFilme extends javax.swing.JFrame {
         initComponents();
         this.setLocationRelativeTo(null);
     }
+    
+    private final FilmeService filmeService = FilmeService.getInstance();
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -281,14 +284,25 @@ public class CadastrarFilme extends javax.swing.JFrame {
             return;
         }
 
-        // --- TUDO CERTO ---
-        javax.swing.JOptionPane.showMessageDialog(this, "Filme cadastrado com sucesso!");
+        int codigo;
+        try {
+            codigo = Integer.parseInt(caixaCodFilme.getText().trim());
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "O código do filme deve ser numérico.");
+            caixaCodFilme.requestFocus();
+            return;
+        }
 
-        // Aqui entraria o código para salvar o objeto Filme no banco de dados/lista
-        // Exemplo:
-        // String genero = caixaGenero.getSelectedItem().toString();
-        // String titulo = caixaTituloFilme.getText();
-        // ...
+        String genero = caixaGenero.getSelectedItem().toString();
+        int classificacao = obterClassificacaoSelecionada();
+
+        try {
+            filmeService.cadastrarFilme(codigo, caixaTituloFilme.getText().trim(), genero, classificacao);
+            JOptionPane.showMessageDialog(this, "Filme cadastrado com sucesso!");
+            limparCampos();
+        } catch (IllegalArgumentException | IllegalStateException e) {
+            JOptionPane.showMessageDialog(this, e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_botaoCadastrarActionPerformed
 
     private void botaoSel12anosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoSel12anosActionPerformed
@@ -310,7 +324,32 @@ public class CadastrarFilme extends javax.swing.JFrame {
     private void caixaGeneroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_caixaGeneroActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_caixaGeneroActionPerformed
+    private int obterClassificacaoSelecionada() {
+        if (botaoSelLivre.isSelected()) {
+            return 0;
+        }
+        if (botaoSel10anos.isSelected()) {
+            return 10;
+        }
+        if (botaoSel12anos.isSelected()) {
+            return 12;
+        }
+        if (botaoSel14anos.isSelected()) {
+            return 14;
+        }
+        if (botaoSel16anos.isSelected()) {
+            return 16;
+        }
+        return 18;
+    }
 
+    private void limparCampos() {
+        caixaTituloFilme.setText("");
+        caixaCodFilme.setText("");
+        classificacaoIndicativa.clearSelection();
+        caixaGenero.setSelectedIndex(0);
+        caixaTituloFilme.requestFocus();
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botaoCadastrar;
     private javax.swing.JButton botaoCancelar;

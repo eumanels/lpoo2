@@ -3,18 +3,22 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package frames;
+import javax.swing.JOptionPane;
+
+import controller.UsuarioService;
 /**
  *
  * @author rjpsilva
  */
 public class CadastrarUsuario extends javax.swing.JFrame {
-
+    private final UsuarioService usuarioService;
     /**
      * Creates new form CadastrarUsuario1
      */
     public CadastrarUsuario() {
         initComponents();
         this.setLocationRelativeTo(null);
+        this.usuarioService = UsuarioService.getInstance();
     }
 
     /**
@@ -207,7 +211,7 @@ public class CadastrarUsuario extends javax.swing.JFrame {
     private void botaoCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoCadastrarActionPerformed
         // 1. Validação do NOME (Campo de texto normal)
         if (caixaNome.getText().trim().isEmpty()) {
-            javax.swing.JOptionPane.showMessageDialog(this, "Por favor, informe o Nome.");
+            JOptionPane.showMessageDialog(this, "Por favor, informe o Nome.");
             caixaNome.requestFocus();
             return;
         }
@@ -216,7 +220,7 @@ public class CadastrarUsuario extends javax.swing.JFrame {
         // Removemos pontos, traços e espaços para ver se sobrou algum número
         String cpfSemFormatacao = caixaCpf.getText().replace(".", "").replace("-", "").replace(" ", "");
         if (cpfSemFormatacao.isEmpty()) {
-            javax.swing.JOptionPane.showMessageDialog(this, "Por favor, informe o CPF.");
+            JOptionPane.showMessageDialog(this, "Por favor, informe o CPF.");
             caixaCpf.requestFocus();
             return;
         }
@@ -225,7 +229,7 @@ public class CadastrarUsuario extends javax.swing.JFrame {
         // Removemos parênteses, traços e espaços
         String telSemFormatacao = caixaTel.getText().replace("(", "").replace(")", "").replace("-", "").replace(" ", "");
         if (telSemFormatacao.isEmpty()) {
-            javax.swing.JOptionPane.showMessageDialog(this, "Por favor, informe o Telefone.");
+            JOptionPane.showMessageDialog(this, "Por favor, informe o Telefone.");
             caixaTel.requestFocus();
             return;
         }
@@ -233,15 +237,31 @@ public class CadastrarUsuario extends javax.swing.JFrame {
         // 4. Validação dos RADIO BUTTONS (Tipo de Usuário)
         // Verifica se nem o funcionário nem o cliente estão marcados
         if (!botaoSelFunc.isSelected() && !botaoSelCli.isSelected()) {
-            javax.swing.JOptionPane.showMessageDialog(this, "Selecione o Tipo de Usuário (Funcionário ou Cliente).");
+            JOptionPane.showMessageDialog(this, "Selecione o Tipo de Usuário (Funcionário ou Cliente).");
             return;
         }
 
         // 5. Validação do ENDEREÇO
         if (caixaEndereco.getText().trim().isEmpty()) {
-            javax.swing.JOptionPane.showMessageDialog(this, "Por favor, informe o Endereço.");
+            JOptionPane.showMessageDialog(this, "Por favor, informe o Endereço.");
             caixaEndereco.requestFocus();
             return;
+        }
+        String nome = caixaNome.getText().trim();
+        String cpf = caixaCpf.getText().trim();
+        String telefone = caixaTel.getText().trim();
+        String endereco = caixaEndereco.getText().trim();
+        String tipo = botaoSelFunc.isSelected() ? "Funcionario" : "Cliente";
+
+        try {
+            usuarioService.cadastrarUsuario(nome, cpf, telefone, endereco, tipo);
+            JOptionPane.showMessageDialog(this, "Usuário cadastrado com sucesso!");
+            limparCampos();
+        } catch (IllegalArgumentException e) {
+            JOptionPane.showMessageDialog(this, e.getMessage(), "CPF duplicado", JOptionPane.WARNING_MESSAGE);
+            caixaCpf.requestFocus();
+        } catch (IllegalStateException e) {
+            JOptionPane.showMessageDialog(this, "Erro ao salvar usuário: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_botaoCadastrarActionPerformed
 

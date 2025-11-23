@@ -30,7 +30,6 @@ public class MostrarFilmes extends javax.swing.JFrame {
         botaoCadastrar = new javax.swing.JButton();
         botaoExcluir = new javax.swing.JButton();
         caixaPesquisar = new javax.swing.JTextField();
-        painelFilmes = new java.awt.ScrollPane();
         labelCpf = new javax.swing.JLabel();
         botaoPesquisar = new javax.swing.JButton();
         botaoAlugar = new javax.swing.JButton();
@@ -38,6 +37,8 @@ public class MostrarFilmes extends javax.swing.JFrame {
         tituloFrame = new javax.swing.JLabel();
         botaoVoltar = new javax.swing.JButton();
         jFormattedTextField1 = new javax.swing.JFormattedTextField();
+        scrollFilmes = new javax.swing.JScrollPane();
+        tabelaFilmes = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -89,6 +90,19 @@ public class MostrarFilmes extends javax.swing.JFrame {
             ex.printStackTrace();
         }
 
+        tabelaFilmes.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        scrollFilmes.setViewportView(tabelaFilmes);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -106,24 +120,24 @@ public class MostrarFilmes extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addComponent(caixaPesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 62, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 66, Short.MAX_VALUE)
                         .addComponent(tituloFrame, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(38, 38, 38)
                         .addComponent(botaoCadastrar)
                         .addGap(41, 41, 41))))
             .addGroup(layout.createSequentialGroup()
                 .addGap(76, 76, 76)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jFormattedTextField1)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(painelFilmes, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(scrollFilmes, javax.swing.GroupLayout.PREFERRED_SIZE, 513, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(jFormattedTextField1)
+                        .addGroup(layout.createSequentialGroup()
                             .addComponent(botaoAlugar)
                             .addGap(56, 56, 56)
                             .addComponent(botaoDevolver)
                             .addGap(48, 48, 48)
                             .addComponent(botaoExcluir))
-                        .addComponent(labelCpf, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(labelCpf, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -138,8 +152,8 @@ public class MostrarFilmes extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(caixaPesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(botaoPesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(11, 11, 11)
-                .addComponent(painelFilmes, javax.swing.GroupLayout.PREFERRED_SIZE, 253, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(scrollFilmes, javax.swing.GroupLayout.PREFERRED_SIZE, 256, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(labelCpf)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -192,7 +206,8 @@ public class MostrarFilmes extends javax.swing.JFrame {
     private javax.swing.JTextField caixaPesquisar;
     private javax.swing.JFormattedTextField jFormattedTextField1;
     private javax.swing.JLabel labelCpf;
-    private java.awt.ScrollPane painelFilmes;
+    private javax.swing.JScrollPane scrollFilmes;
+    private javax.swing.JTable tabelaFilmes;
     private javax.swing.JLabel tituloFrame;
     // End of variables declaration//GEN-END:variables
 }
