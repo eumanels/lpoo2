@@ -211,7 +211,7 @@ public class MostrarFilmes extends javax.swing.JFrame {
                     .addComponent(botaoAlugar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jFormattedTextField1))
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(botaoDevolver)
                     .addComponent(botaoExcluir)
                     .addComponent(botaoInfo))

@@ -17,10 +17,10 @@ public class Aluguel {
 		return filme;
 	}
 
-	// Formato para salvar no arquivo alugueis.txt (CPF;Nome;CodFilme;Titulo)
-	public String toArquivo() {
-		return cliente.getCpf() + ";" + cliente.getNome() + ";" + filme.getCodFilme() + ";" + filme.getTitulo();
-	}
+        // Formato para salvar no arquivo alugueis.txt (IdUsuario;CodFilme;TituloFilme)
+        public String toArquivo() {
+                return cliente.getId() + ";" + filme.getCodFilme() + ";" + filme.getTitulo();
+        }
 	
 	@Override
 	public String toString() {

@@ -58,30 +58,52 @@ public class FilmeService {
         try (Scanner leitor = new Scanner(arquivoAlugueis)) {
             while (leitor.hasNextLine()) {
                 String[] partes = leitor.nextLine().split(";");
-                if (partes.length < 4) {
+                if (partes.length == 3) {
+                    long clienteId = Long.parseLong(partes[0]);
+                    int codigoFilmeRegistrado = Integer.parseInt(partes[1]);
+
+                    if (codigoFilmeRegistrado != codigo) {
+                        continue;
+                    }
+
+                    Cliente cliente = usuarioService.buscarClientePorId(clienteId);
+
+                    String nome = cliente != null ? cliente.getNome() : "Cliente não encontrado";
+                    String cpf = cliente != null ? cliente.getCpf() : "ID: " + clienteId;
+                    String telefone = cliente != null ? cliente.getTelefone() : "Não informado";
+                    String endereco = cliente != null ? cliente.getEndereco() : "Não informado";
+
+                    historico.add(String.format(
+                            "Cliente: %s (CPF: %s) - Telefone: %s - Endereço: %s",
+                            nome,
+                            cpf,
+                            telefone,
+                            endereco
+                    ));
                     continue;
                 }
 
-                int codigoFilmeRegistrado = Integer.parseInt(partes[2]);
+                if (partes.length >= 4) {
+                    int codigoFilmeRegistrado = Integer.parseInt(partes[2]);
+                    if (codigoFilmeRegistrado != codigo) {
+                        continue;
+                    }
 
-                if (codigoFilmeRegistrado != codigo) {
-                    continue;
-                }
+                    String cpf = partes[0];
+                    Cliente cliente = usuarioService.buscarClientePorCpf(cpf);
 
-                String cpf = partes[0];
-                Cliente cliente = usuarioService.buscarClientePorCpf(cpf);
-
-                String nome = cliente != null ? cliente.getNome() : partes[1];
-                String telefone = cliente != null ? cliente.getTelefone() : "Não informado";
-                String endereco = cliente != null ? cliente.getEndereco() : "Não informado";
-
+                    String nome = cliente != null ? cliente.getNome() : partes[1];
+                    String telefone = cliente != null ? cliente.getTelefone() : "Não informado";
+                    String endereco = cliente != null ? cliente.getEndereco() : "Não informado";
+                    
                 historico.add(String.format(
-                        "Cliente: %s (CPF: %s) - Telefone: %s - Endereço: %s",
-                        nome,
-                        cpf,
-                        telefone,
-                        endereco
-                ));
+                            "Cliente: %s (CPF: %s) - Telefone: %s - Endereço: %s",
+                            nome,
+                            cpf,
+                            telefone,
+                            endereco
+                    ));
+                }
             }
         } catch (FileNotFoundException e) {
             throw new IllegalStateException("Arquivo de aluguéis não encontrado: " + e.getMessage(), e);

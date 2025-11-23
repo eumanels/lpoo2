@@ -73,6 +73,15 @@ public class UsuarioService {
                 .orElse(null);
     }
     
+    public Cliente buscarClientePorId(long id) {
+        return usuarios.stream()
+                .filter(usuario -> usuario.getId() == id)
+                .filter(Cliente.class::isInstance)
+                .map(Cliente.class::cast)
+                .findFirst()
+                .orElse(null);
+    }
+    
     public void excluirUsuario(String cpf) {
         String cpfNormalizado = normalizarDocumento(cpf);
 
