@@ -23,12 +23,10 @@ public class FilmeService {
 
     private final List<Filme> filmes;
     private final File arquivoFilmes;
-    private final Map<Integer, String> generoTextualPorFilme;
 
     private FilmeService() {
         this.filmes = new ArrayList<>();
         this.arquivoFilmes = new File("filmes.txt");
-        this.generoTextualPorFilme = new HashMap<>();
         carregarFilmes();
     }
 
@@ -38,6 +36,54 @@ public class FilmeService {
 
     public List<Filme> getFilmes() {
         return Collections.unmodifiableList(filmes);
+    }
+    
+    public Filme buscarFilmePorCodigo(int codigo) {
+        return filmes.stream()
+                .filter(filme -> filme.getCodFilme() == codigo)
+                .findFirst()
+                .orElse(null);
+    }
+
+    public void alugarFilme(int codigo, String cpfCliente) {
+        Filme filme = buscarFilmePorCodigo(codigo);
+
+        if (filme == null) {
+            throw new IllegalArgumentException("Filme não encontrado.");
+        }
+
+        if (!"disponível".equalsIgnoreCase(filme.getSituacao())) {
+            throw new IllegalArgumentException("O filme selecionado já está alugado.");
+        }
+
+        filme.setSituacao("indisponível");
+        filme.setCpfClienteAlugou(cpfCliente);
+        salvarFilmes();
+    }
+
+    public void devolverFilme(int codigo) {
+        Filme filme = buscarFilmePorCodigo(codigo);
+
+        if (filme == null) {
+            throw new IllegalArgumentException("Filme não encontrado.");
+        }
+
+        if ("disponível".equalsIgnoreCase(filme.getSituacao())) {
+            throw new IllegalArgumentException("O filme selecionado já está disponível.");
+        }
+
+        filme.setSituacao("disponível");
+        filme.setCpfClienteAlugou(null);
+        salvarFilmes();
+    }
+
+    public void excluirFilme(int codigo) {
+        boolean removido = filmes.removeIf(filme -> filme.getCodFilme() == codigo);
+
+        if (!removido) {
+            throw new IllegalArgumentException("Filme não encontrado.");
+        }
+        salvarFilmes();
     }
 
     /**
@@ -56,12 +102,10 @@ public class FilmeService {
             throw new IllegalArgumentException("Já existe um filme cadastrado com esse código.");
         }
 
+        // ainda pode normalizar, para aceitar "A", "a", "ação", etc
         String generoNormalizado = traduzirGenero(genero);
-        generoTextualPorFilme.put(codigo, generoNormalizado);
 
-        char generoChar = generoNormalizado.isEmpty() ? ' ' : Character.toUpperCase(generoNormalizado.charAt(0));
-
-        Filme novo = new Filme(codigo, titulo.trim(), generoChar, classificacao, "disponível");
+        Filme novo = new Filme(codigo, titulo.trim(), generoNormalizado, classificacao, "disponível");
         filmes.add(novo);
         salvarFilmes();
     }
@@ -69,10 +113,13 @@ public class FilmeService {
     private void salvarFilmes() {
         try (PrintWriter arquivo = new PrintWriter(new FileWriter(arquivoFilmes))) {
             for (Filme f : filmes) {
-                String generoTexto = generoTextualPorFilme.getOrDefault(f.getCodFilme(), traduzirGenero(String.valueOf(f.getGenero())));
-
-                arquivo.println(f.getCodFilme() + ";" + f.getTitulo() + ";" + generoTexto + ";" + f.getClassificacao()
-                        + ";" + f.getSituacao());
+                arquivo.println(
+                    f.getCodFilme() + ";" +
+                    f.getTitulo() + ";" +
+                    f.getGenero() + ";" +
+                    f.getClassificacao() + ";" +
+                    f.getSituacao()
+                );
             }
         } catch (IOException e) {
             throw new IllegalStateException("Erro ao salvar filmes: " + e.getMessage(), e);
@@ -92,12 +139,13 @@ public class FilmeService {
                     String genero = traduzirGenero(partes[2]);
                     int codigo = Integer.parseInt(partes[0]);
 
-                    generoTextualPorFilme.put(codigo, genero);
-
-                    char generoChar = genero.isEmpty() ? ' ' : Character.toUpperCase(genero.charAt(0));
-
-                    Filme filme = new Filme(codigo, partes[1], generoChar,
-                            Integer.parseInt(partes[3]), partes[4]);
+                    Filme filme = new Filme(
+                            codigo,
+                            partes[1],
+                            genero,
+                            Integer.parseInt(partes[3]),
+                            partes[4]
+                    );
                     filmes.add(filme);
                 }
             }

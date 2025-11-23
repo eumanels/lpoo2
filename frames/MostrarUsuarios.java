@@ -4,6 +4,10 @@
  */
 package frames;
 
+import controller.UsuarioService;
+import javax.swing.table.DefaultTableModel;
+import model.Usuario;
+
 /**
  *
  * @author rjpsilva
@@ -71,6 +75,7 @@ public class MostrarUsuarios extends javax.swing.JFrame {
         botaoExcluir.setText("Excluir Usuário");
 
         scrollUsuarios.setToolTipText("");
+        scrollUsuarios.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
         tabelaUsuarios.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {

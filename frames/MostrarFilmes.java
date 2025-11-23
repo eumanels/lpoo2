@@ -3,7 +3,19 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package frames;
-
+import controller.FilmeService;
+import controller.UsuarioService;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.List;
+import java.util.stream.Collectors;
+import javax.swing.JOptionPane;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+import javax.swing.table.DefaultTableModel;
+import model.Filme;
 /**
  *
  * @author rjpsilva
@@ -16,7 +28,15 @@ public class MostrarFilmes extends javax.swing.JFrame {
     public MostrarFilmes() {
         initComponents();
         this.setLocationRelativeTo(null);
+        configurarTabela();
+        configurarListeners();
+        carregarFilmesNaTabela(filmeService.getFilmes());
+        atualizarEstadoAcoes();
     }
+    
+    private final FilmeService filmeService = FilmeService.getInstance();
+    private final UsuarioService usuarioService = UsuarioService.getInstance();
+    private DefaultTableModel modeloTabela;
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -117,37 +137,42 @@ public class MostrarFilmes extends javax.swing.JFrame {
                         .addComponent(botaoVoltar)))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addComponent(caixaPesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 66, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(tituloFrame, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(38, 38, 38)
+                        .addGap(113, 113, 113)
                         .addComponent(botaoCadastrar)
-                        .addGap(41, 41, 41))))
+                        .addGap(17, 17, 17))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(caixaPesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, 473, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(76, Short.MAX_VALUE))))
             .addGroup(layout.createSequentialGroup()
-                .addGap(76, 76, 76)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(scrollFilmes, javax.swing.GroupLayout.PREFERRED_SIZE, 513, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(jFormattedTextField1)
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(botaoAlugar)
-                            .addGap(56, 56, 56)
-                            .addComponent(botaoDevolver)
-                            .addGap(48, 48, 48)
-                            .addComponent(botaoExcluir))
-                        .addComponent(labelCpf, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(108, 108, 108)
+                        .addComponent(botaoAlugar)
+                        .addGap(56, 56, 56)
+                        .addComponent(botaoDevolver)
+                        .addGap(56, 56, 56)
+                        .addComponent(botaoExcluir))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(76, 76, 76)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(labelCpf, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(scrollFilmes, javax.swing.GroupLayout.DEFAULT_SIZE, 586, Short.MAX_VALUE)
+                            .addComponent(jFormattedTextField1))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(tituloFrame, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(botaoVoltar)
-                    .addComponent(botaoCadastrar))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(botaoVoltar)
+                            .addComponent(botaoCadastrar))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(caixaPesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -195,6 +220,241 @@ public class MostrarFilmes extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_botaoVoltarActionPerformed
 
+    private void configurarTabela() {
+        modeloTabela = new DefaultTableModel(
+            new Object[]{"Código", "Título", "Gênero", "Class. Ind.", "Situação"}, 0
+        ) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
+        tabelaFilmes.setModel(modeloTabela);
+
+        // Opcional: desativa o auto-resize para respeitar mais os tamanhos
+        tabelaFilmes.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
+
+        // Configura larguras das colunas
+        var colModel = tabelaFilmes.getColumnModel();
+
+        colModel.getColumn(0).setPreferredWidth(50);   // Código
+        colModel.getColumn(1).setPreferredWidth(270);  // Título
+        colModel.getColumn(2).setPreferredWidth(100);  // Gênero
+        colModel.getColumn(3).setPreferredWidth(70);  // Classificação
+        colModel.getColumn(4).setPreferredWidth(90);   // Situação
+    }
+
+
+    private void configurarListeners() {
+        botaoPesquisar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                pesquisarFilmes();
+            }
+        });
+
+        botaoAlugar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                alugarFilmeSelecionado();
+            }
+        });
+
+        botaoDevolver.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                devolverFilmeSelecionado();
+            }
+        });
+
+        botaoExcluir.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                excluirFilmeSelecionado();
+            }
+        });
+
+        caixaPesquisar.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                atualizarEstadoAcoes();
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                atualizarEstadoAcoes();
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                atualizarEstadoAcoes();
+            }
+        });
+
+        jFormattedTextField1.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                atualizarEstadoAcoes();
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                atualizarEstadoAcoes();
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                atualizarEstadoAcoes();
+            }
+        });
+
+        tabelaFilmes.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+            @Override
+            public void valueChanged(ListSelectionEvent e) {
+                if (!e.getValueIsAdjusting()) {
+                    atualizarEstadoAcoes();
+                }
+            }
+        });
+    }
+
+    private void carregarFilmesNaTabela(List<Filme> filmes) {
+        modeloTabela.setRowCount(0);
+
+        for (Filme filme : filmes) {
+            modeloTabela.addRow(new Object[]{
+                filme.getCodFilme(),
+                filme.getTitulo(),
+                filme.getGenero(),
+                filme.getClassificacao(),
+                filme.getSituacao()
+            });
+        }
+    }
+
+    private void pesquisarFilmes() {
+        String termo = caixaPesquisar.getText().trim();
+
+        if (termo.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Informe um título ou código para pesquisar.", "Aviso", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        List<Filme> encontrados = filmeService.getFilmes().stream()
+                .filter(filme -> correspondePesquisa(filme, termo))
+                .collect(Collectors.toList());
+
+        if (encontrados.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Nenhum filme encontrado.", "Pesquisa", JOptionPane.INFORMATION_MESSAGE);
+        }
+
+        carregarFilmesNaTabela(encontrados);
+    }
+
+    private boolean correspondePesquisa(Filme filme, String termo) {
+        String termoMinusculo = termo.toLowerCase();
+
+        boolean tituloCorresponde = filme.getTitulo().toLowerCase().contains(termoMinusculo);
+        boolean codigoCorresponde;
+
+        try {
+            int codigo = Integer.parseInt(termo);
+            codigoCorresponde = filme.getCodFilme() == codigo;
+        } catch (NumberFormatException e) {
+            codigoCorresponde = false;
+        }
+
+        return tituloCorresponde || codigoCorresponde;
+    }
+
+    private void alugarFilmeSelecionado() {
+        int linhaSelecionada = tabelaFilmes.getSelectedRow();
+        if (linhaSelecionada < 0) {
+            JOptionPane.showMessageDialog(this, "Selecione um filme para alugar.", "Aviso", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        String cpf = obterCpfDigitado();
+        if (cpf.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Informe o CPF do cliente.", "Aviso", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        if (!usuarioService.existeUsuarioPorCpf(cpf)) {
+            JOptionPane.showMessageDialog(this, "Cliente não encontrado. Cadastre o usuário antes de alugar.", "Erro", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        int codigo = (int) modeloTabela.getValueAt(linhaSelecionada, 0);
+
+        try {
+            filmeService.alugarFilme(codigo, cpf);
+            JOptionPane.showMessageDialog(this, "Filme alugado com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+            limparFiltro();
+            carregarFilmesNaTabela(filmeService.getFilmes());
+        } catch (IllegalArgumentException ex) {
+            JOptionPane.showMessageDialog(this, ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    private void devolverFilmeSelecionado() {
+        int linhaSelecionada = tabelaFilmes.getSelectedRow();
+        if (linhaSelecionada < 0) {
+            JOptionPane.showMessageDialog(this, "Selecione um filme para devolver.", "Aviso", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        int codigo = (int) modeloTabela.getValueAt(linhaSelecionada, 0);
+
+        try {
+            filmeService.devolverFilme(codigo);
+            JOptionPane.showMessageDialog(this, "Filme devolvido com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+            limparFiltro();
+            carregarFilmesNaTabela(filmeService.getFilmes());
+        } catch (IllegalArgumentException ex) {
+            JOptionPane.showMessageDialog(this, ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    private void excluirFilmeSelecionado() {
+        int linhaSelecionada = tabelaFilmes.getSelectedRow();
+        if (linhaSelecionada < 0) {
+            JOptionPane.showMessageDialog(this, "Selecione um filme para excluir.", "Aviso", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        int codigo = (int) modeloTabela.getValueAt(linhaSelecionada, 0);
+
+        try {
+            filmeService.excluirFilme(codigo);
+            JOptionPane.showMessageDialog(this, "Filme excluído com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+            limparFiltro();
+            carregarFilmesNaTabela(filmeService.getFilmes());
+        } catch (IllegalArgumentException ex) {
+            JOptionPane.showMessageDialog(this, ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    private void limparFiltro() {
+        caixaPesquisar.setText("");
+        tabelaFilmes.clearSelection();
+        atualizarEstadoAcoes();
+    }
+
+    private void atualizarEstadoAcoes() {
+        boolean possuiSelecao = tabelaFilmes.getSelectedRow() >= 0;
+        boolean possuiCpf = !obterCpfDigitado().isEmpty();
+        boolean possuiPesquisa = !caixaPesquisar.getText().trim().isEmpty();
+
+        botaoPesquisar.setEnabled(possuiPesquisa);
+        botaoAlugar.setEnabled(possuiSelecao && possuiCpf);
+        botaoDevolver.setEnabled(possuiSelecao);
+        botaoExcluir.setEnabled(possuiSelecao);
+    }
+
+    private String obterCpfDigitado() {
+        return jFormattedTextField1.getText().replaceAll("[^0-9]", "");
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botaoAlugar;

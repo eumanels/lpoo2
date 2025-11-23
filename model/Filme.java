@@ -3,12 +3,12 @@ package model;
 public class Filme {
 	private int codFilme;
 	private String titulo;
-	private char genero;
+	private String genero;
 	private int classificacao;
 	private String situacao;
 	private String cpfClienteAlugou;
 
-	public Filme(int cod, String titulo, char genero, int classificacao, String situacao) {
+	public Filme(int cod, String titulo, String genero, int classificacao, String situacao) {
 		this.codFilme = cod;
 		this.titulo = titulo;
 		this.genero = genero;
@@ -59,12 +59,12 @@ public class Filme {
 
 	}
 
-	public char getGenero() {
+	public String getGenero() {
 		return genero;
 
 	}
 
-	public void setGenero(char genero) {
+	public void setGenero(String genero) {
 		this.genero = genero;
 
 	}

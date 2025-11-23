@@ -40,6 +40,12 @@ public class UsuarioService {
     public List<Usuario> getUsuarios() {
         return Collections.unmodifiableList(usuarios);
     }
+    
+    public boolean existeUsuarioPorCpf(String cpf) {
+        String cpfNormalizado = normalizarDocumento(cpf);
+        return usuarios.stream()
+                .anyMatch(usuario -> normalizarDocumento(usuario.getCpf()).equals(cpfNormalizado));
+    }
 
     /**
      * Cadastra um novo usuário e persiste imediatamente no arquivo.

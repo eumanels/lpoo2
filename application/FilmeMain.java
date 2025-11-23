@@ -1,4 +1,4 @@
-package application;
+/*package application;
 
 import controller.LocadoraController;
 
@@ -8,4 +8,4 @@ public class FilmeMain {
 		LocadoraController sistema = new LocadoraController();
 		sistema.iniciar();
 	}
-}
+}*/

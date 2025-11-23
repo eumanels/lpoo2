@@ -130,9 +130,11 @@
     </Component>
     <Container class="javax.swing.JScrollPane" name="scrollUsuarios">
       <Properties>
-        <Property name="toolTipText" type="java.lang.String" value=""/>
-        <Property name="columnHeaderView" type="java.awt.Component" editor="org.netbeans.modules.form.ComponentChooserEditor">
-          <ComponentRef name="default"/>
+        <Property name="toolTipText" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor" preCode="&#xa;">
+          <Connection code="&quot;&quot;" type="code"/>
+        </Property>
+        <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
+          <Color id="Default Cursor"/>
         </Property>
       </Properties>
 
