@@ -119,22 +119,25 @@ public class MostrarUsuarios extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(22, 22, 22)
                 .addComponent(botaoVoltar)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 198, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(tituloFrame, javax.swing.GroupLayout.PREFERRED_SIZE, 263, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(111, 111, 111)
+                .addGap(66, 66, 66)
                 .addComponent(botaoCadastrar)
                 .addGap(26, 26, 26))
             .addGroup(layout.createSequentialGroup()
-                .addGap(349, 349, 349)
-                .addComponent(botaoEditar))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(46, 46, 46)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(botaoPesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(barraPesquisa))
-                    .addComponent(scrollUsuarios, javax.swing.GroupLayout.PREFERRED_SIZE, 756, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(349, 349, 349)
+                        .addComponent(botaoEditar))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(46, 46, 46)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(scrollUsuarios, javax.swing.GroupLayout.PREFERRED_SIZE, 666, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(botaoPesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(barraPesquisa)))))
+                .addGap(0, 46, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -190,7 +193,7 @@ public class MostrarUsuarios extends javax.swing.JFrame {
 
     private void configurarTabela() {
         modeloTabela = new DefaultTableModel(
-                new Object[]{"CPF", "Nome", "Telefone", "Endereço", "Tipo"}, 0
+                new Object[]{"CPF", "Nome", "Telefone", "Endereço"}, 0
         ) {
             @Override
             public boolean isCellEditable(int row, int column) {
@@ -209,7 +212,6 @@ public class MostrarUsuarios extends javax.swing.JFrame {
         colModel.getColumn(1).setPreferredWidth(230);  // Nome
         colModel.getColumn(2).setPreferredWidth(100);  // Telefone
         colModel.getColumn(3).setPreferredWidth(230);  // Endereço
-        colModel.getColumn(4).setPreferredWidth(90);   // Tipo
     }
 
     private void configurarListeners() {
@@ -269,8 +271,7 @@ public class MostrarUsuarios extends javax.swing.JFrame {
                 normalizarCpfParaExibicao(usuario.getCpf()),
                 valorSeguro(usuario.getNome()),
                 valorSeguro(usuario.getTelefone()),
-                valorSeguro(usuario.getEndereco()),
-                valorSeguro(usuarioService.obterTipoTextual(usuario))
+                valorSeguro(usuario.getEndereco())
             });
         }
     }

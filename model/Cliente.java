@@ -3,19 +3,19 @@ package model;
 public class Cliente extends Usuario {  // Herança.
 	private String nome;
 
-	public Cliente(long id, String cpf, String telefone, String endereco, char tipoUsuario, String nome) {
-                super(id, cpf, telefone, endereco, tipoUsuario);
+        public Cliente(long id, String cpf, String telefone, String endereco, String nome) {
+                super(id, cpf, telefone, endereco);
                 this.nome = nome;
         }
 
-	@Override
-	public String getNome() {
-		return nome;
-	}
-
-	public void setNome(String nome) {
-		this.nome = nome;
-	}
+        @Override
+        public String getNome() {
+                return nome;
+        }
+        
+        public void setNome(String nome) {
+                this.nome = nome;
+        }
 
 	// implementação do método abstrato.
 	@Override

@@ -5,14 +5,12 @@ public abstract class Usuario { // Classe abstrata.
         private String cpf;
         private String telefone;
         private String endereco;
-        private char tipoUsuario;
 
-	public Usuario(long id, String cpf, String telefone, String endereco, char tipoUsuario) {
+        public Usuario(long id, String cpf, String telefone, String endereco) {
                 this.id = id;
                 this.cpf = cpf;
                 this.telefone = telefone;
                 this.endereco = endereco;
-                this.tipoUsuario = tipoUsuario;
         }
 
         public long getId() {
@@ -47,22 +45,14 @@ public abstract class Usuario { // Classe abstrata.
 		this.endereco = endereco;
 	}
 
-	public char getTipoUsuario() {
-		return tipoUsuario;
-	}
-
-	public void setTipoUsuario(char tipoUsuario) {
-		this.tipoUsuario = tipoUsuario;
-	}
-
 	// Método abstrato.
 	// Toda classe que herdar de Usuario tem que implementar este método.
 	public abstract String descricaoTipo();
 
 	public abstract String getNome();
 
-	@Override
-	public String toString() {
-		return "CPF: " + cpf + "\nTelefone: " + telefone + "\nEndereço: " + endereco + "\nTipo: " + descricaoTipo();
-	}
+        @Override
+        public String toString() {
+                return "CPF: " + cpf + "\nTelefone: " + telefone + "\nEndereço: " + endereco;
+        }
 }
