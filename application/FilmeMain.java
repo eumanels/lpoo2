@@ -1,11 +1,13 @@
-/*package application;
+package application;
 
-import controller.LocadoraController;
+import frames.MenuPrincipal;
 
-public class FilmeMain {
-	public static void main(String[] args) {
-		
-		LocadoraController sistema = new LocadoraController();
-		sistema.iniciar();
-	}
-}*/
+public final class FilmeMain {
+
+    private FilmeMain() {
+    }
+
+    public static void main(String[] args) {
+        MenuPrincipal.main(args);
+    }
+}
