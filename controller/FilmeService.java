@@ -2,6 +2,7 @@ package controller;
 
 import java.io.File;
 import java.io.FileWriter;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -45,6 +46,50 @@ public class FilmeService {
                 .filter(filme -> filme.getCodFilme() == codigo)
                 .findFirst()
                 .orElse(null);
+    }
+    
+    public List<String> listarHistoricoAlugueisPorFilme(int codigo, UsuarioService usuarioService) {
+        if (!arquivoAlugueis.exists()) {
+            return Collections.emptyList();
+        }
+
+        List<String> historico = new ArrayList<>();
+
+        try (Scanner leitor = new Scanner(arquivoAlugueis)) {
+            while (leitor.hasNextLine()) {
+                String[] partes = leitor.nextLine().split(";");
+                if (partes.length < 4) {
+                    continue;
+                }
+
+                int codigoFilmeRegistrado = Integer.parseInt(partes[2]);
+
+                if (codigoFilmeRegistrado != codigo) {
+                    continue;
+                }
+
+                String cpf = partes[0];
+                Cliente cliente = usuarioService.buscarClientePorCpf(cpf);
+
+                String nome = cliente != null ? cliente.getNome() : partes[1];
+                String telefone = cliente != null ? cliente.getTelefone() : "Não informado";
+                String endereco = cliente != null ? cliente.getEndereco() : "Não informado";
+
+                historico.add(String.format(
+                        "Cliente: %s (CPF: %s) - Telefone: %s - Endereço: %s",
+                        nome,
+                        cpf,
+                        telefone,
+                        endereco
+                ));
+            }
+        } catch (FileNotFoundException e) {
+            throw new IllegalStateException("Arquivo de aluguéis não encontrado: " + e.getMessage(), e);
+        } catch (NumberFormatException e) {
+            throw new IllegalStateException("Erro ao ler histórico de aluguéis: " + e.getMessage(), e);
+        }
+
+        return historico;
     }
 
     public Filme alugarFilme(int codigo, Cliente cliente) {

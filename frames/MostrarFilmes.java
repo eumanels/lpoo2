@@ -5,11 +5,14 @@
 package frames;
 import controller.FilmeService;
 import controller.UsuarioService;
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
 import java.util.stream.Collectors;
 import javax.swing.JOptionPane;
+import javax.swing.JList;
+import javax.swing.JScrollPane;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.event.ListSelectionEvent;
@@ -166,12 +169,12 @@ public class MostrarFilmes extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                         .addComponent(botaoAlugar)
-                        .addGap(34, 34, 34)
+                        .addGap(37, 37, 37)
                         .addComponent(botaoDevolver)
-                        .addGap(32, 32, 32)
+                        .addGap(36, 36, 36)
                         .addComponent(botaoExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(botaoInfo))
+                        .addComponent(botaoInfo, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(labelCpf, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(scrollFilmes, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 586, Short.MAX_VALUE)
                     .addComponent(jFormattedTextField1, javax.swing.GroupLayout.Alignment.LEADING))
@@ -240,7 +243,7 @@ public class MostrarFilmes extends javax.swing.JFrame {
     }//GEN-LAST:event_botaoExcluirActionPerformed
 
     private void botaoInfoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoInfoActionPerformed
-        // TODO add your handling code here:
+        mostrarInformacoesAlugueis();
     }//GEN-LAST:event_botaoInfoActionPerformed
 
     private void configurarTabela() {
@@ -487,10 +490,40 @@ private void carregarFilmesNaTabela(List<Filme> filmes) {
         botaoAlugar.setEnabled(possuiSelecao && possuiCpf);
         botaoDevolver.setEnabled(possuiSelecao);
         botaoExcluir.setEnabled(possuiSelecao);
+        botaoInfo.setEnabled(possuiSelecao);
+
     }
 
     private String obterCpfDigitado() {
         return jFormattedTextField1.getText().replaceAll("[^0-9]", "");
+    }
+    
+    private void mostrarInformacoesAlugueis() {
+        int linhaSelecionada = tabelaFilmes.getSelectedRow();
+
+        if (linhaSelecionada < 0) {
+            JOptionPane.showMessageDialog(this, "Selecione um filme para ver as informações.", "Aviso", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        int codigo = (int) modeloTabela.getValueAt(linhaSelecionada, 0);
+        List<String> historico = filmeService.listarHistoricoAlugueisPorFilme(codigo, usuarioService);
+
+        if (historico.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Nenhum aluguel registrado para este filme.", "Informação", JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
+
+        JList<String> lista = new JList<>(historico.toArray(new String[0]));
+        JScrollPane scroll = new JScrollPane(lista);
+        scroll.setPreferredSize(new Dimension(550, 200));
+
+        JOptionPane.showMessageDialog(
+                this,
+                scroll,
+                "Histórico de Aluguéis",
+                JOptionPane.INFORMATION_MESSAGE
+        );
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
