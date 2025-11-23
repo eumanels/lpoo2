@@ -27,43 +27,51 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" alignment="0" attributes="0">
-              <EmptySpace min="-2" pref="65" max="-2" attributes="0"/>
+          <Group type="102" attributes="0">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="-2" pref="110" max="-2" attributes="0"/>
-                      <Component id="tituloFrame" min="-2" pref="263" max="-2" attributes="0"/>
-                  </Group>
-                  <Component id="caixaNome" alignment="0" min="-2" pref="514" max="-2" attributes="0"/>
-                  <Component id="labelNome" alignment="0" min="-2" max="-2" attributes="0"/>
-                  <Component id="caixaEndereco" alignment="0" min="-2" pref="514" max="-2" attributes="0"/>
-                  <Component id="labelEndereco" alignment="0" min="-2" max="-2" attributes="0"/>
-                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace min="-2" pref="65" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="labelCpf" min="-2" max="-2" attributes="0"/>
-                          <Component id="caixaCpf" min="-2" pref="140" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                          <Group type="102" attributes="0">
-                              <Component id="labelTelefone" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace max="32767" attributes="0"/>
-                              <Component id="labelTipoUsu" min="-2" max="-2" attributes="0"/>
+                          <Component id="caixaNome" alignment="0" min="-2" pref="514" max="-2" attributes="0"/>
+                          <Component id="labelNome" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="caixaEndereco" alignment="0" min="-2" pref="514" max="-2" attributes="0"/>
+                          <Component id="labelEndereco" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Group type="102" alignment="0" attributes="0">
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="labelCpf" min="-2" max="-2" attributes="0"/>
+                                  <Component id="caixaCpf" min="-2" pref="140" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                  <Group type="102" attributes="0">
+                                      <Component id="labelTelefone" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace max="32767" attributes="0"/>
+                                      <Component id="labelTipoUsu" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                                  <Group type="102" attributes="0">
+                                      <Component id="caixaTel" min="-2" pref="140" max="-2" attributes="0"/>
+                                      <EmptySpace min="-2" pref="29" max="-2" attributes="0"/>
+                                      <Component id="botaoSelFunc" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                              </Group>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="botaoSelCli" min="-2" max="-2" attributes="0"/>
                           </Group>
-                          <Group type="102" attributes="0">
-                              <Component id="caixaTel" min="-2" pref="140" max="-2" attributes="0"/>
-                              <EmptySpace min="-2" pref="29" max="-2" attributes="0"/>
-                              <Component id="botaoSelFunc" min="-2" max="-2" attributes="0"/>
-                          </Group>
                       </Group>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="botaoSelCli" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="-2" pref="116" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="46" max="-2" attributes="0"/>
+                      <Component id="tituloFrame" min="-2" pref="263" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="tituloFrame1" min="-2" pref="263" max="-2" attributes="0"/>
+                  </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace min="-2" pref="87" max="-2" attributes="0"/>
                       <Component id="botaoCancelar" min="-2" pref="113" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="44" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="52" max="-2" attributes="0"/>
                       <Component id="botaoCadastrar" min="-2" pref="113" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="48" max="-2" attributes="0"/>
+                      <Component id="botaoSalvarEdicao" min="-2" pref="113" max="-2" attributes="0"/>
                   </Group>
               </Group>
               <EmptySpace pref="65" max="32767" attributes="0"/>
@@ -73,9 +81,12 @@
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
-              <EmptySpace max="-2" attributes="0"/>
-              <Component id="tituloFrame" min="-2" pref="51" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="19" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="13" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="tituloFrame" alignment="3" min="-2" pref="51" max="-2" attributes="0"/>
+                  <Component id="tituloFrame1" alignment="3" min="-2" pref="51" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Component id="labelNome" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="caixaNome" min="-2" pref="37" max="-2" attributes="0"/>
@@ -98,12 +109,13 @@
               <Component id="labelEndereco" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="caixaEndereco" min="-2" pref="37" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="34" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="32" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="botaoCancelar" alignment="3" min="-2" pref="37" max="-2" attributes="0"/>
                   <Component id="botaoCadastrar" alignment="3" min="-2" pref="37" max="-2" attributes="0"/>
+                  <Component id="botaoSalvarEdicao" alignment="3" min="-2" pref="37" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace min="-2" pref="57" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="59" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -182,7 +194,7 @@
           <Font name="Segoe UI" size="24" style="0"/>
         </Property>
         <Property name="horizontalAlignment" type="int" value="0"/>
-        <Property name="text" type="java.lang.String" value="Cadastro de Usu&#xe1;rios"/>
+        <Property name="text" type="java.lang.String" value="Cadastro de Usu&#xe1;rio"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="labelCpf">
@@ -219,6 +231,26 @@
           <Format format="(##)#####-####" subtype="-1" type="5"/>
         </Property>
       </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="tituloFrame1">
+      <Properties>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="Segoe UI" size="24" style="0"/>
+        </Property>
+        <Property name="horizontalAlignment" type="int" value="0"/>
+        <Property name="text" type="java.lang.String" value="Editar Usu&#xe1;rio"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JButton" name="botaoSalvarEdicao">
+      <Properties>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="sansserif" size="18" style="0"/>
+        </Property>
+        <Property name="text" type="java.lang.String" value="Salvar"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="botaoSalvarEdicaoActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>

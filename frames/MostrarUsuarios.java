@@ -52,7 +52,7 @@ public class MostrarUsuarios extends javax.swing.JFrame {
         botaoPesquisar = new javax.swing.JButton();
         botaoCadastrar = new javax.swing.JButton();
         botaoVoltar = new javax.swing.JButton();
-        botaoExcluir = new javax.swing.JButton();
+        botaoEditar = new javax.swing.JButton();
         scrollUsuarios = new javax.swing.JScrollPane();
         tabelaUsuarios = new javax.swing.JTable();
 
@@ -87,8 +87,8 @@ public class MostrarUsuarios extends javax.swing.JFrame {
             }
         });
 
-        botaoExcluir.setFont(new java.awt.Font("sansserif", 0, 18)); // NOI18N
-        botaoExcluir.setText("Excluir Usuário");
+        botaoEditar.setFont(new java.awt.Font("sansserif", 0, 18)); // NOI18N
+        botaoEditar.setText("Editar Usuário");
 
         scrollUsuarios.setToolTipText("");
         scrollUsuarios.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
@@ -121,7 +121,7 @@ public class MostrarUsuarios extends javax.swing.JFrame {
                 .addGap(26, 26, 26))
             .addGroup(layout.createSequentialGroup()
                 .addGap(349, 349, 349)
-                .addComponent(botaoExcluir))
+                .addComponent(botaoEditar))
             .addGroup(layout.createSequentialGroup()
                 .addGap(46, 46, 46)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -146,7 +146,7 @@ public class MostrarUsuarios extends javax.swing.JFrame {
                 .addGap(13, 13, 13)
                 .addComponent(scrollUsuarios, javax.swing.GroupLayout.PREFERRED_SIZE, 305, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(botaoExcluir)
+                .addComponent(botaoEditar)
                 .addContainerGap(25, Short.MAX_VALUE))
         );
 
@@ -211,7 +211,7 @@ public class MostrarUsuarios extends javax.swing.JFrame {
             }
         });
 
-        botaoExcluir.addActionListener(new ActionListener() {
+        botaoEditar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 excluirUsuarioSelecionado();
@@ -335,7 +335,7 @@ public class MostrarUsuarios extends javax.swing.JFrame {
         boolean temSelecao = tabelaUsuarios.getSelectedRow() >= 0;
         boolean temTextoPesquisa = !barraPesquisa.getText().trim().isEmpty();
 
-        botaoExcluir.setEnabled(temSelecao);
+        botaoEditar.setEnabled(temSelecao);
         botaoPesquisar.setEnabled(temTextoPesquisa);
     }
 
@@ -354,7 +354,7 @@ public class MostrarUsuarios extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField barraPesquisa;
     private javax.swing.JButton botaoCadastrar;
-    private javax.swing.JButton botaoExcluir;
+    private javax.swing.JButton botaoEditar;
     private javax.swing.JButton botaoPesquisar;
     private javax.swing.JButton botaoVoltar;
     private javax.swing.JScrollPane scrollUsuarios;

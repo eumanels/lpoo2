@@ -45,6 +45,8 @@ public class CadastrarUsuario extends javax.swing.JFrame {
         labelNome = new javax.swing.JLabel();
         caixaCpf = new javax.swing.JFormattedTextField();
         caixaTel = new javax.swing.JFormattedTextField();
+        tituloFrame1 = new javax.swing.JLabel();
+        botaoSalvarEdicao = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -91,7 +93,7 @@ public class CadastrarUsuario extends javax.swing.JFrame {
 
         tituloFrame.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         tituloFrame.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        tituloFrame.setText("Cadastro de Usuários");
+        tituloFrame.setText("Cadastro de Usuário");
 
         labelCpf.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         labelCpf.setText("CPF");
@@ -117,49 +119,69 @@ public class CadastrarUsuario extends javax.swing.JFrame {
             ex.printStackTrace();
         }
 
+        tituloFrame1.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        tituloFrame1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        tituloFrame1.setText("Editar Usuário");
+
+        botaoSalvarEdicao.setFont(new java.awt.Font("sansserif", 0, 18)); // NOI18N
+        botaoSalvarEdicao.setText("Salvar");
+        botaoSalvarEdicao.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoSalvarEdicaoActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(65, 65, 65)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(110, 110, 110)
-                        .addComponent(tituloFrame, javax.swing.GroupLayout.PREFERRED_SIZE, 263, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(caixaNome, javax.swing.GroupLayout.PREFERRED_SIZE, 514, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(labelNome)
-                    .addComponent(caixaEndereco, javax.swing.GroupLayout.PREFERRED_SIZE, 514, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(labelEndereco)
-                    .addGroup(layout.createSequentialGroup()
+                        .addGap(65, 65, 65)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(labelCpf)
-                            .addComponent(caixaCpf, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(28, 28, 28)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(caixaNome, javax.swing.GroupLayout.PREFERRED_SIZE, 514, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(labelNome)
+                            .addComponent(caixaEndereco, javax.swing.GroupLayout.PREFERRED_SIZE, 514, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(labelEndereco)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(labelTelefone)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(labelTipoUsu))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(caixaTel, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(29, 29, 29)
-                                .addComponent(botaoSelFunc)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(botaoSelCli))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(labelCpf)
+                                    .addComponent(caixaCpf, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(28, 28, 28)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(labelTelefone)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(labelTipoUsu))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(caixaTel, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(29, 29, 29)
+                                        .addComponent(botaoSelFunc)))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(botaoSelCli))))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(116, 116, 116)
+                        .addGap(46, 46, 46)
+                        .addComponent(tituloFrame, javax.swing.GroupLayout.PREFERRED_SIZE, 263, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(tituloFrame1, javax.swing.GroupLayout.PREFERRED_SIZE, 263, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(87, 87, 87)
                         .addComponent(botaoCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(44, 44, 44)
-                        .addComponent(botaoCadastrar, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(52, 52, 52)
+                        .addComponent(botaoCadastrar, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(48, 48, 48)
+                        .addComponent(botaoSalvarEdicao, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(65, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(tituloFrame, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(19, 19, 19)
+                .addGap(13, 13, 13)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(tituloFrame, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(tituloFrame1, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(labelNome)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(caixaNome, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -179,11 +201,12 @@ public class CadastrarUsuario extends javax.swing.JFrame {
                 .addComponent(labelEndereco)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(caixaEndereco, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(34, 34, 34)
+                .addGap(32, 32, 32)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(botaoCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(botaoCadastrar, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(57, 57, 57))
+                    .addComponent(botaoCadastrar, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(botaoSalvarEdicao, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(59, 59, 59))
         );
 
         pack();
@@ -281,10 +304,15 @@ public class CadastrarUsuario extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_caixaNomeActionPerformed
 
+    private void botaoSalvarEdicaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoSalvarEdicaoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_botaoSalvarEdicaoActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botaoCadastrar;
     private javax.swing.JButton botaoCancelar;
+    private javax.swing.JButton botaoSalvarEdicao;
     private javax.swing.JRadioButton botaoSelCli;
     private javax.swing.JRadioButton botaoSelFunc;
     private javax.swing.JFormattedTextField caixaCpf;
@@ -298,5 +326,6 @@ public class CadastrarUsuario extends javax.swing.JFrame {
     private javax.swing.JLabel labelTipoUsu;
     private javax.swing.ButtonGroup tipoUsuario;
     private javax.swing.JLabel tituloFrame;
+    private javax.swing.JLabel tituloFrame1;
     // End of variables declaration//GEN-END:variables
 }
